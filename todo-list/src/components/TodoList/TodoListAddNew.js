@@ -4,24 +4,24 @@ import { Grid, Button, Input, Paper } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
-	detailsRoot: {
+	addNewRoot: {
 		flexGrow: 1
 	}
 });
 
-export const TodoListDetails = (props) => (
-	<Grid container className={classes.detailsRoot}>
+export const TodoListAddNew = () => (
+	<Grid container className={classes.addNewRoot}>
 		<Grid item xs={12}>
 			<Paper>
-				Todo Details
+				Add New Todo
 				<h1>{props.todo}</h1>
 			</Paper>
 		</Grid>
 	</Grid>
 );
 
-TodoListDetails.propTypes = {
+TodoListAddNew.propTypes = {
 	classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(TodoListDetails);
+export default withStyles(styles)(TodoListAddNew);
