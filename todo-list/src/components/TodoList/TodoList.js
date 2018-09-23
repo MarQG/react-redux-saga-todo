@@ -17,11 +17,11 @@ const styles = theme => ({
 	}
 });
 
-export const TodoList = () => (
+export const TodoList = ({classes, todos}) => (
 	<Grid container  justify="center">
-		<List className={this.props.classes.listRoot} >
-			{this.props.todos.map(todo => 
-				<TodoListItem key={todo.id} todo={todo} handleToggle={this.handleToggle} handleRemoveTodo={this.handleRemoveTodo}/>)}
+		<List className={classes.listRoot} >
+			{todos.map(todo => 
+				<TodoListItem key={todo.id} todo={todo}/>)}
 		</List>
 	</Grid>
 );
