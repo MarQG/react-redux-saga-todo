@@ -1,16 +1,16 @@
 const defaultTodos = [
 	{
-		id: 1,
+		id: "1",
 		title: "Test1",
 		completed: false
 	},
 	{
-		id: 2,
+		id: "2",
 		title: "Test2",
 		completed: false
 	},
 	{
-		id: 3,
+		id: "3",
 		title: "Test3",
 		completed: false
 	}
