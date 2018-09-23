@@ -5,7 +5,7 @@ import {
 	Paper, 
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import TodoList from '../components/TodoList';
+import TodoList from '../components/TodoList/TodoList';
 
 const styles = theme => ({
 	root: {
