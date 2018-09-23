@@ -24,7 +24,7 @@ const styles = theme => ({
 	}
 });
 
-export const MainPage = ({classes}) => (
+export const App = ({classes}) => (
 	<Grid container className={classes.root} spacing={16}>
 		<Grid item className={classes.control} xs={12}>
 			<Grid container justify="center">
@@ -38,8 +38,8 @@ export const MainPage = ({classes}) => (
 	</Grid>
 );
 
-MainPage.propTypes = {
+App.propTypes = {
 	classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(MainPage);
+export default withStyles(styles)(App);
