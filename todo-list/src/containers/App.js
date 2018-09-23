@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { 
 	Grid, 
-	Paper, 
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import TodoList from '../components/TodoList/TodoList';
 import TodoListAddNew from '../components/TodoList/TodoListAddNew.js';
+import { connect } from 'react-redux';
+import { fetchTodos } from '../store/actions/todos';
 
 const styles = theme => ({
 	root: {
@@ -25,23 +26,30 @@ const styles = theme => ({
 	}
 });
 
-export const App = ({classes}) => (
-	<Grid container className={classes.root} spacing={16}>
-		<Grid item className={classes.control} xs={12}>
-			<Grid container justify="center">
-				<Paper className={classes.paper}>
-					<h1>To-do List</h1>
-				</Paper>
-			</Grid>
+export class App extends Component {
 
-			<TodoList />
-			<TodoListAddNew />
+	componentDidMount = () => {
+		this.props.fetchTodos();
+	}
+
+	render(){ 
+		return (
+		<Grid container className={this.props.classes.root} spacing={16}>
+			<Grid item className={this.props.classes.control} xs={12}>
+				<TodoListAddNew />
+				<TodoList />
+			</Grid>
 		</Grid>
-	</Grid>
-);
+		);
+	}
+};
 
 App.propTypes = {
 	classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(App);
+const mapDispatchToProps = (dispatch) => ({
+	fetchTodos: () => dispatch(fetchTodos())
+});
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(App));
