@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Paper } from '@material-ui/core';
+import { 
+	Grid, 
+	Paper, 
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import TodoList from '../components/TodoList/TodoList';
 
 const styles = theme => ({
 	root: {
@@ -9,6 +13,7 @@ const styles = theme => ({
 		backgroundColor: '#eee',
 		height: '100vh'
 	},
+	
 	control:{
 		padding: theme.spacing.unit * 2
 	},
@@ -19,7 +24,7 @@ const styles = theme => ({
 	}
 });
 
-export const MainPage = ({classes}) => (
+export const App = ({classes}) => (
 	<Grid container className={classes.root} spacing={16}>
 		<Grid item className={classes.control} xs={12}>
 			<Grid container justify="center">
@@ -27,12 +32,14 @@ export const MainPage = ({classes}) => (
 					<h1>To-do List</h1>
 				</Paper>
 			</Grid>
+
+			<TodoList />
 		</Grid>
 	</Grid>
 );
 
-MainPage.propTypes = {
+App.propTypes = {
 	classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(MainPage);
+export default withStyles(styles)(App);
