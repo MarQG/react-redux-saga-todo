@@ -16,7 +16,7 @@ const styles = theme => ({
 	}
 });
 
-export const TodoListItem = ({todo, classes, handleRemoveTodo, handleToggle}) => (
+export const TodoListItem = ({todo, classes}) => (
 	<ListItem 
 		key={todo.id}
 		dense
@@ -33,11 +33,11 @@ export const TodoListItem = ({todo, classes, handleRemoveTodo, handleToggle}) =>
 		<ListItemSecondaryAction>
 			<Checkbox
 				checked={todo.completed}
-				onChange={() => {handleToggle(todo.id)}}
+				
 				tabIndex={-1}
 				disableRipple
 			/>
-			<IconButton onClick={() => handleRemoveTodo(todo.id)}>
+			<IconButton >
 				<Close />
 			</IconButton>
 		</ListItemSecondaryAction>

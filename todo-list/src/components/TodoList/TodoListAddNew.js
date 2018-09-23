@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Button, Input, Paper } from '@material-ui/core';
+import { Grid, Button, TextField, Paper } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -9,12 +9,12 @@ const styles = theme => ({
 	}
 });
 
-export const TodoListAddNew = () => (
+export const TodoListAddNew = ({classes}) => (
 	<Grid container className={classes.addNewRoot}>
 		<Grid item xs={12}>
 			<Paper>
 				Add New Todo
-				<h1>{props.todo}</h1>
+				<h1>Testing Todo Add</h1>
 			</Paper>
 		</Grid>
 	</Grid>

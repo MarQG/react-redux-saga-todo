@@ -6,6 +6,8 @@ import {
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import TodoList from '../components/TodoList/TodoList';
+import TodoListAddNew from '../components/TodoList/TodoListAddNew.js';
+import TodoListDetails from '../components/TodoList/TodoListDetails';
 
 const styles = theme => ({
 	root: {
@@ -34,6 +36,8 @@ export const App = ({classes}) => (
 			</Grid>
 
 			<TodoList />
+			<TodoListAddNew />
+			<TodoListDetails />
 		</Grid>
 	</Grid>
 );
