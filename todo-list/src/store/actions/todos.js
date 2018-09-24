@@ -5,7 +5,7 @@ export const fetchTodos = () => ({
 })
 
 export const addTodo = (todo) => ({
-	type: actions.ADD_TODO,
+	type: actions.ADD_TODO_START,
 	todo
 });
 

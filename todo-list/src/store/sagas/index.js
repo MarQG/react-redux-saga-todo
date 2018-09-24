@@ -1,7 +1,8 @@
-import { takeLatest } from 'redux-saga/effects';
-import { fetchTodosSaga } from './todosSagas';
-import actionTypes from '../actions/actionTypes';
+import { takeLatest, takeEvery } from 'redux-saga/effects';
+import { fetchTodosSaga, addNewTodoSaga } from './todosSagas';
+import actions from '../actions/actionTypes';
 
 export function* watchTodos() {
-	yield takeLatest(actionTypes.FETCH_TODOS_START, fetchTodosSaga)
+	yield takeLatest(actions.FETCH_TODOS_START, fetchTodosSaga);
+	yield takeEvery(actions.ADD_TODO_START, addNewTodoSaga);
 }
