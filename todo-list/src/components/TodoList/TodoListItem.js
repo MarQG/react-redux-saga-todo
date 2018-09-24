@@ -9,6 +9,8 @@ import {
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { removeTodo } from '../../store/actions/todos';
 
 const styles = theme => ({
 	listItemCompleted: {
@@ -16,7 +18,7 @@ const styles = theme => ({
 	}
 });
 
-export const TodoListItem = ({todo, classes}) => (
+export const TodoListItem = ({todo, classes, removeTodo}) => (
 	<ListItem 
 		key={todo.id}
 		dense
@@ -33,11 +35,11 @@ export const TodoListItem = ({todo, classes}) => (
 		<ListItemSecondaryAction>
 			<Checkbox
 				checked={todo.completed}
-				
+				disabled={todo.completed}
 				tabIndex={-1}
 				disableRipple
 			/>
-			<IconButton >
+			<IconButton onClick={() => removeTodo(todo.id)}>
 				<Close />
 			</IconButton>
 		</ListItemSecondaryAction>
@@ -48,4 +50,8 @@ TodoListItem.propTypes = {
 	classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(TodoListItem);
+const mapDispatchToProps = (dispatch) => ({
+	removeTodo: (id) => dispatch(removeTodo(id))
+})
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(TodoListItem));
