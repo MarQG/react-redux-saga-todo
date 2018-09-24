@@ -26,7 +26,7 @@ TodoListDetails.propTypes = {
 }
 
 const mapStateToProps = (state, props) => ({ 
-	todo: state.todos.find((todo) => todo.id === props.match.params.id) 
+	todo: state.todos.find((todo) => todo.id === parseInt(props.match.params.id)) 
 });
 
 export default connect(mapStateToProps, null)(withStyles(styles)(TodoListDetails));
