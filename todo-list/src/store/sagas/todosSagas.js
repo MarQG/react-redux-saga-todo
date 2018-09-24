@@ -24,3 +24,14 @@ export function* addNewTodoSaga(action) {
 	}
 }
 
+export function* removeTodoSaga(action) {
+	try {
+		const response = yield API.deleteTodo(action.id)
+		const todos = yield response.json();
+		yield put({ type: actions.REMOVE_TODO_SUCCEEDED });
+		yield put({ type: actions.FETCH_TODOS_SUCCEEDED, todos: todos });
+	} catch (error) {
+		yield put({ type: actions.REMOVE_TODO_FAILED, message: error.message });
+	}
+}
+

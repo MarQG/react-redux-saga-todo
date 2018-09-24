@@ -13,7 +13,14 @@ export const addNewTodo = ({title}) => {
 	});
 }
 
+export const deleteTodo = (id) => {
+	return isoFetch(`https://practiceapi.devmountain.com/api/tasks/${id}`, {
+		method: "delete",
+	});
+}
+
 export default {
 	fetchTodos: fetchTodos,
-	addNewTodo: addNewTodo
+	addNewTodo: addNewTodo,
+	deleteTodo: deleteTodo,
 };

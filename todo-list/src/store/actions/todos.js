@@ -10,7 +10,7 @@ export const addTodo = (todo) => ({
 });
 
 export const removeTodo = (id) => ({
-	type: actions.REMOVE_TODO,
+	type: actions.REMOVE_TODO_START,
 	id
 });
 
