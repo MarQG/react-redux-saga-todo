@@ -28,9 +28,7 @@ const styles = theme => ({
 
 export class App extends Component {
 
-	componentDidMount = () => {
-		this.props.fetchTodos();
-	}
+
 
 	render(){ 
 		return (

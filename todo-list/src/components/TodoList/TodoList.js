@@ -31,7 +31,7 @@ TodoList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-	todos: state.todos
+	todos: state.todos.todos
 });
 
 export default connect(mapStateToProps, null)(withStyles(styles)(TodoList));

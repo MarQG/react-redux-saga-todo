@@ -11,6 +11,7 @@ import { Close } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { removeTodo } from '../../store/actions/todos';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
 	listItemCompleted: {
@@ -18,11 +19,12 @@ const styles = theme => ({
 	}
 });
 
-export const TodoListItem = ({todo, classes, removeTodo}) => (
+export const TodoListItem = ({todo, classes, removeTodo, history }) => (
 	<ListItem 
 		key={todo.id}
 		dense
 		button
+		onClick={() => { history.push(`/edit/${todo.id}`)}}
 		className={classes.ListItem} 
 	>	
 		<ListItemText 
@@ -54,4 +56,6 @@ const mapDispatchToProps = (dispatch) => ({
 	removeTodo: (id) => dispatch(removeTodo(id))
 })
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(TodoListItem));
+export default connect(null, mapDispatchToProps)(
+					withStyles(styles)(withRouter(TodoListItem))
+				);
