@@ -8,7 +8,26 @@ import { fetchTodos, editTodo, completeTodo, removeTodo } from '../../store/acti
 
 const styles = theme => ({
 	detailsRoot: {
-		flexGrow: 1
+		flexGrow: 1,
+		width: "100%",
+		maxWidth: 360,
+		padding: theme.spacing.unit * 2
+	},
+	detailsInput: {
+		marginRight: theme.spacing.unit
+	},
+	detailsDescription: {
+		width: "100%",
+		marginBottom: theme.spacing.unit * 2
+	},
+	detailsButtons:{
+		width: "100%",
+	},
+	detailsBackButton:{
+		marginBottom: theme.spacing.unit,
+	},
+	detailsButtonText:{
+		fontSize: "0.8em"
 	}
 });
 
@@ -65,49 +84,72 @@ export class TodoListDetails extends Component {
 		const { todo, classes, loaded } = this.props;
 		return(
 				loaded ? 
-				<Grid container className={classes.detailsRoot}>
-					<Grid item xs={12}>
+				<Grid container justify="center" >
+					<Grid item xs={12}className={classes.detailsRoot}>
 						<Paper>
 							<Grid container className={classes.detailsRoot}>
-								<Grid item xs={4}>
-									<Button variant="flat" onClick={this.handleBack}>
+								<Grid item xs={6}>
+									<Button variant="flat" color="default" className={classes.detailsBackButton} size="medium" onClick={this.handleBack}>
 										<ArrowLeft /> 
-										<Typography>Back to List</Typography>
+										<Typography variant="button" className={classes.detailsButtonText} >Back to List</Typography>
 									</Button>
 									
 								</Grid>
+								<Grid item xs={12}> 
+									<TextField 
+										label="Title"
+										name="title"
+										value={todo.title }
+										onChange={this.handleOnChange}
+										className={classes.detailsInput}
+									/>
+									<Button 
+										variant="raised" 
+										color="default"
+										size="medium"
+										disabled={todo.completed}
+										onClick={() => this.handleOnCompleted(todo.id)}
+									>Completed</Button>
+								</Grid>
+								<Grid item xs={12}>
+									<TextField 
+										label="Description"
+										multiline
+										name="description"
+										value={todo.description }
+										onChange={this.handleOnChange}
+										className={classes.detailsDescription}
+									/>
+								</Grid>
+								<Grid item xs={12}>
+									<Grid container justify="space-evenly" spacing={8}>
+										<Grid item xs={4}>
+											<Button 
+												variant="raised" 
+												color="primary"
+												onClick={this.handleSave}
+												className={classes.detailsButtons}
+											>Save</Button>
+										</Grid>
+										<Grid item xs={4}>
+											<Button 
+												variant="raised" 
+												color="default"
+												onClick={this.handleCancel}
+												className={classes.detailsButtons}
+											>Cancel</Button>
+										</Grid>
+										<Grid item xs={4}>
+											<Button 
+												variant="raised" 
+												color="secondary"
+												onClick={this.handleRemove}
+												className={classes.detailsButtons}
+											>Remove</Button>
+										</Grid>
+									</Grid>
+								</Grid>
 							</Grid>
-							<TextField 
-								name="title"
-								value={todo.title }
-								onChange={this.handleOnChange}
-							/>
-							<Button 
-								variant="raised" 
-								color="default"
-								disabled={todo.completed}
-								onClick={() => this.handleOnCompleted(todo.id)}
-							>Completed</Button>
-							<TextField 
-								name="description"
-								value={todo.description }
-								onChange={this.handleOnChange}
-							/>
-							<Button 
-								variant="raised" 
-								color="primary"
-								onClick={this.handleSave}
-							>Save</Button>
-							<Button 
-								variant="raised" 
-								color="default"
-								onClick={this.handleCancel}
-							>Cancel</Button>
-							<Button 
-								variant="raised" 
-								color="secondary"
-								onClick={this.handleRemove}
-							>Remove</Button>
 						</Paper>
 					</Grid>
 				</Grid> : <p>loading...</p>
