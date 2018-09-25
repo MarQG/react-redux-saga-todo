@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
 	Grid, 
@@ -31,7 +31,7 @@ TodoList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-	todos: state.todos
+	todos: state.todos.todos
 });
 
 export default connect(mapStateToProps, null)(withStyles(styles)(TodoList));
