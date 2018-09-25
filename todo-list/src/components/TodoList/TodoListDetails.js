@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Button, TextField, Paper, IconButton, Typography } from '@material-ui/core';
+import { Grid, Button, TextField, Paper, Typography } from '@material-ui/core';
 import { ArrowLeft } from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { fetchTodos, completeTodo, removeTodo } from '../../store/actions/todos';
+import { fetchTodos, editTodo, completeTodo, removeTodo } from '../../store/actions/todos';
 
 const styles = theme => ({
 	detailsRoot: {
@@ -17,7 +17,7 @@ export class TodoListDetails extends Component {
 	state = {
 		title: "",
 		description: "",
-		completed: false,
+		error: ""
 	}
 	
 	handleBack = () => {
@@ -27,6 +27,7 @@ export class TodoListDetails extends Component {
 	handleOnChange = (event) => {
 		const { name, value } = event.target;
 		this.setState({ [name]: value });
+		this.props.todo[name] = value;
 	}
 	
 	handleOnCompleted = () => {
@@ -34,10 +35,24 @@ export class TodoListDetails extends Component {
 	}
 
 	handleCancel = () => {
+		const { todo, initialTodo } = this.props;
 		this.setState({ ...this.props.initialTodo });
+		todo.title = initialTodo.title;
+		todo.description = initialTodo.description;
 	}
 
 	handleSave = () => {
+		const { title, description, completed, id } = this.props.todo;
+		let updates = {
+			title,
+			description,
+			completed
+		};
+
+		if(updates.title === "" || updates.title.length < 1){
+			return this.setState({ error: "Title cannot be empty!"});
+		}
+		this.props.editTodo(id, updates);
 		this.props.history.push("/");
 	}
 
@@ -64,7 +79,7 @@ export class TodoListDetails extends Component {
 							</Grid>
 							<TextField 
 								name="title"
-								value={this.state.title !== "" ? this.state.title : todo.title }
+								value={todo.title }
 								onChange={this.handleOnChange}
 							/>
 							<Button 
@@ -75,7 +90,7 @@ export class TodoListDetails extends Component {
 							>Completed</Button>
 							<TextField 
 								name="description"
-								value={this.state.description !== "" ? this.state.description : todo.description }
+								value={todo.description }
 								onChange={this.handleOnChange}
 							/>
 							<Button 
@@ -106,7 +121,7 @@ TodoListDetails.propTypes = {
 
 const mapStateToProps = (state, props) => {
 	if(state.todos.loaded){
-		const currentTodo = state.todos.todos.find((todo) => todo.id === parseInt(props.match.params.id), 10);
+		const currentTodo = state.todos.todos.find((todo) => todo.id === parseInt(props.match.params.id, 10));
 		const { title, description, completed } = currentTodo;
 		const initialTodo = {
 			title: title,
@@ -129,6 +144,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => ({
 	fetchTodos: () => dispatch(fetchTodos()),
+	editTodo: (id, updates) => dispatch(editTodo(id, updates)),
 	completeTodo: (id) => dispatch(completeTodo(id)),
 	removeTodo: (id) => dispatch(removeTodo(id))
 });

@@ -19,8 +19,8 @@ export const completeTodo = (id) => ({
 	id
 });
 
-export const editTodo = (todo) => ({
-	type: actions.EDIT_TODOS,
-	id: todo.id,
-	updates: todo
+export const editTodo = (id, updates) => ({
+	type: actions.EDIT_TODO_START,
+	id,
+	updates
 });
