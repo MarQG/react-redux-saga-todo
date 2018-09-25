@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Button, TextField, Paper, IconButton } from '@material-ui/core';
+import { Grid, Button, TextField, Paper, IconButton, Typography } from '@material-ui/core';
 import { ArrowLeft } from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { fetchTodos } from '../../store/actions/todos';
+import { fetchTodos, completeTodo, removeTodo } from '../../store/actions/todos';
 
 const styles = theme => ({
 	detailsRoot: {
@@ -13,50 +13,89 @@ const styles = theme => ({
 });
 
 export class TodoListDetails extends Component {
+
 	state = {
 		title: "",
-		description: "" ,
+		description: "",
 		completed: false,
 	}
-
+	
 	handleBack = () => {
 		this.props.history.push("/");
 	}
 
 	handleOnChange = (event) => {
 		const { name, value } = event.target;
-		this.setState({ [name]:value });
-		this.props.todo[name] = value;
-	} 
+		this.setState({ [name]: value });
+	}
+	
+	handleOnCompleted = () => {
+		this.props.completeTodo(this.props.todo.id);
+	}
+
+	handleCancel = () => {
+		this.setState({ ...this.props.initialTodo });
+	}
+
+	handleSave = () => {
+		this.props.history.push("/");
+	}
+
+	handleRemove = () => {
+		this.props.removeTodo(this.props.todo.id)
+		this.props.history.push("/");
+	}
 	
 	render(){
-	return(
-			this.props.loaded ? 
-			<Grid container className={this.props.classes.detailsRoot}>
-				<Grid item xs={12}>
-					<Paper>
-						<Grid container className={this.props.classes.detailsRoot}>
-							<Grid item xs={4}>
-								<IconButton onClick={this.handleBack}>
-									<ArrowLeft />
-								</IconButton>
+		const { todo, classes, loaded } = this.props;
+		return(
+				loaded ? 
+				<Grid container className={classes.detailsRoot}>
+					<Grid item xs={12}>
+						<Paper>
+							<Grid container className={classes.detailsRoot}>
+								<Grid item xs={4}>
+									<Button variant="flat" onClick={this.handleBack}>
+										<ArrowLeft /> 
+										<Typography>Back to List</Typography>
+									</Button>
+									
+								</Grid>
 							</Grid>
-						</Grid>
-						<TextField 
-							name="title"
-							value={this.props.todo.title}
-							onChange={this.handleOnChange}
-						/>
-						<TextField 
-							name="description"
-							value={this.props.todo.description}
-							onChange={this.handleOnChange}
-						/>
-						Todo Details {this.props.match.params.id}
-						<h1>Testing {this.props.todo.title}</h1>
-					</Paper>
-				</Grid>
-			</Grid> : <p>loading...</p>
+							<TextField 
+								name="title"
+								value={this.state.title !== "" ? this.state.title : todo.title }
+								onChange={this.handleOnChange}
+							/>
+							<Button 
+								variant="raised" 
+								color="default"
+								disabled={todo.completed}
+								onClick={() => this.handleOnCompleted(todo.id)}
+							>Completed</Button>
+							<TextField 
+								name="description"
+								value={this.state.description !== "" ? this.state.description : todo.description }
+								onChange={this.handleOnChange}
+							/>
+							<Button 
+								variant="raised" 
+								color="primary"
+								onClick={this.handleSave}
+							>Save</Button>
+							<Button 
+								variant="raised" 
+								color="default"
+								onClick={this.handleCancel}
+							>Cancel</Button>
+							<Button 
+								variant="raised" 
+								color="secondary"
+								onClick={this.handleRemove}
+							>Remove</Button>
+						</Paper>
+					</Grid>
+				</Grid> : <p>loading...</p>
 		);
 	}
 }
@@ -67,8 +106,7 @@ TodoListDetails.propTypes = {
 
 const mapStateToProps = (state, props) => {
 	if(state.todos.loaded){
-		const currentTodo = state.todos.todos.find((todo) => todo.id === parseInt(props.match.params.id));
-		console.log(currentTodo);
+		const currentTodo = state.todos.todos.find((todo) => todo.id === parseInt(props.match.params.id), 10);
 		const { title, description, completed } = currentTodo;
 		const initialTodo = {
 			title: title,
@@ -90,7 +128,9 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-	fetchTodos: () => dispatch(fetchTodos())
+	fetchTodos: () => dispatch(fetchTodos()),
+	completeTodo: (id) => dispatch(completeTodo(id)),
+	removeTodo: (id) => dispatch(removeTodo(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(TodoListDetails));

@@ -14,13 +14,13 @@ export const removeTodo = (id) => ({
 	id
 });
 
+export const completeTodo = (id) => ({
+	type: actions.COMPLETE_TODO_START,
+	id
+});
+
 export const editTodo = (todo) => ({
 	type: actions.EDIT_TODOS,
 	id: todo.id,
 	updates: todo
-});
-
-export const setTodos = (todos) => ({
-	type: actions.SET_TODOS,
-	todos
 });

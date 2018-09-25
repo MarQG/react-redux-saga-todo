@@ -35,3 +35,14 @@ export function* removeTodoSaga(action) {
 	}
 }
 
+export function* completeTodoSaga(action) {
+	try {
+		const response = yield API.completeTodo(action.id)
+		const todos = yield response.json();
+		yield put({ type: actions.COMPLETE_TODO_SUCCEEDED });
+		yield put({ type: actions.FETCH_TODOS_SUCCEEDED, todos: todos });
+	} catch (error) {
+		yield put({ type: actions.COMPLETE_TODO_FAILED, message: error.message });
+	}
+}
+
